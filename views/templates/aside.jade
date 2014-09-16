@@ -35,7 +35,8 @@ div.posts-aside
     span Aurreko postak
   div.posts-wrapper
     div.post-wrapper
-      each post in posts
-        div.createdAt #{moment(post.createdAt).format('L')}
-        div.post
-          a(href="/artikuluak/#{post.slug}") #{post.title}
+      each post, i in posts
+        if i < 6
+          div.createdAt #{moment(post.createdAt).format('L')}
+          div.post
+            a(href="/artikuluak/#{post.slug}") #{post.title}

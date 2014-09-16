@@ -31,7 +31,7 @@ exports.post = function(req, res, next, slug) {
 exports.all = function (req, res) {
   var tags, i = 0, length = 0;
 
-  Post.find().sort('-created').exec(function (err, posts) {
+  Post.find().sort('-createdAt').exec(function (err, posts) {
     if (err) {
       res.render(err, {
         status: 500
@@ -59,7 +59,7 @@ exports.tag = function(req, res) {
   var tags, i = 0, length = 0;
 
   Post.find({ 'tags.tag': req.params.tag })
-    .sort('-created').exec(function (err, posts) {
+    .sort('-createdAt').exec(function (err, posts) {
       if (err) {
         res.render(err, {
           status: 500
@@ -85,7 +85,7 @@ exports.tag = function(req, res) {
 
 exports.feed = function (req, res) {
   var feed, i, j, length;
-  
+
   feed = new Feed({
     title      : 'blog.benatespina',
     description: 'My personal blog where I talk about development in basque',
@@ -97,7 +97,7 @@ exports.feed = function (req, res) {
       link : 'http://benatespina.com'
     }
   });
-  
+
   Post.find().sort('-created').exec(function (err, posts) {
     if (err) {
       res.render(err, {
@@ -112,7 +112,7 @@ exports.feed = function (req, res) {
         date       : posts[i].createdAt
       });
     }
-    
+
     res.set('Content-Type', 'text/xml');
     res.send(feed.render('atom-1.0'));
   });
